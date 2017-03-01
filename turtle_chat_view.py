@@ -1,6 +1,6 @@
 #2016-2017 PERSONAL PROJECTS: TurtleChat!
-#WRITE YOUR NAME HERE!
-
+#WRITE YOUR NAME HERE!ade
+#ade
 #####################################################################################
 #                                   IMPORTS                                         #
 #####################################################################################
@@ -9,7 +9,10 @@
 #Finally, from the turtle_chat_widgets module, import two classes: Button and TextInput
 #####################################################################################
 #####################################################################################
-
+import turtle
+from turtle_chat_client import Client
+from turtle_chat_widgets import Button
+from turtle_chat_widgets import TextInput
 #####################################################################################
 #                                   TextBox                                         #
 #####################################################################################
@@ -35,6 +38,36 @@
 #
 #3. If you want to make a newline character (i.e. go to the next line), just add
 #   \r to your string.  Test it out at the Python shell for practice
+class TextBox (TextInput):
+
+        def draw_box(self):
+            
+##            turtle.hideturtle()
+            
+            self.writer.penup()
+            self.writer.goto(100,0)
+            self.writer.pendown()
+            self.writer.goto(100,200)
+            self.writer.goto(-100,200)
+            self.writer.goto(-100,0)
+            
+##            self.writer.goto(self.width,self.height)
+##            self.writer.goto(-200,self.height)
+##            self.writer.goto(-200,-200)
+            
+            
+            self.writer.penup()
+
+        def write_msg(self):
+            self.writer.clear()
+            self.writer.penup()
+            self.writer.goto(0,self.height-10)
+            self.writer.pendown()
+            self.writer.write(self.new_msg)
+
+            
+                
+
 #####################################################################################
 #####################################################################################
 
@@ -55,10 +88,22 @@
 #      you send messages and update message displays.
 #####################################################################################
 #####################################################################################
-
-
+class SendButton(Button):
+        def fun(self,x=None,y=None):
+                self.view.send_msg()
+        def __init__(self,view):
+        
+                self.view=view
+                super(SendButton,self).__init__()
+                       
+                
+                
+        
+        
+                
 ##################################################################
-#                             View                               #
+#                  'module 4 super'           View
+##########################################################6,4,2,2
 ##################################################################
 #Make a new class called View.  It does not need to have a parent
 #class mentioned explicitly.
@@ -77,6 +122,13 @@ class View:
         :param username: the name of this chat user
         :param partner_name: the name of the user you are chatting with
         '''
+        self.sendbutton=SendButton(self)
+        self.username=username
+        self.partner_name=partner_name
+        self.my_client=Client()
+        
+
+        
         ###
         #Store the username and partner_name into the instance.
         ###
@@ -96,7 +148,7 @@ class View:
         #
         #at the Python shell.
         ###
-
+        turtle.setup(self._SCREEN-WIDTH,self.SCREEN_HEIGHT)
         ###
         #This list will store all of the messages.
         #You can add strings to the front of the list using
@@ -132,8 +184,12 @@ class View:
         It should call self.display_msg() to cause the message
         display to be updated.
         '''
-        pass
-
+        self.my_client.send(self.textbox.new_msg)
+        self.msg_queue.insert(0,self.textbox.new_msg)
+        self.textbox.clear_msg()
+        self.display_msg() 
+        
+        
     def get_msg(self):
         return self.textbox.get_msg()
 
@@ -165,14 +221,24 @@ class View:
         show_this_msg=self.partner_name+' says:\r'+ msg
         #Add the message to the queue either using insert (to put at the beginning)
         #or append (to put at the end).
+        self.msg_queue.append()
+        
         #
         #Then, call the display_msg method to update the display
-
+        
+        self.display_msg
     def display_msg(self):
         '''
         This method should update the messages displayed in the screen.
         You can get the messages you want from self.msg_queue
         '''
+        self.ade=turtle.clone()
+        self.ade.write=writer
+        for i in range(5):
+                
+                self.ade.goto(0,50*i)
+                self.ade.write(self.msg_queue[i])
+        
         pass
 
     def get_client(self):
